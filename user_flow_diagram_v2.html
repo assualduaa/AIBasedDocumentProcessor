@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PDF Processor – User Flow Diagram v2</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #0f1117;
+    color: #e0e0e0;
+    min-height: 100vh;
+    padding: 24px;
+  }
+  h1 {
+    text-align: center;
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 4px;
+    letter-spacing: 0.5px;
+  }
+  .subtitle {
+    text-align: center;
+    font-size: 13px;
+    color: #888;
+    margin-bottom: 28px;
+  }
+  .diagram-wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    overflow-x: auto;
+  }
+  svg { display: block; margin: 0 auto; }
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+    margin-top: 28px;
+    font-size: 12px;
+  }
+  .legend-item { display: flex; align-items: center; gap: 7px; }
+  .legend-box { width: 18px; height: 14px; border-radius: 3px; flex-shrink: 0; }
+  .footer {
+    text-align: center;
+    margin-top: 32px;
+    font-size: 11px;
+    color: #555;
+  }
+</style>
+</head>
+<body>
+
+<h1>PDF Processor &mdash; User Flow Diagram v2</h1>
+<p class="subtitle">Reflects updated UI: Tabs, Batch Folder, Delete Toggle, Source Path, Deletion Report</p>
+
+<div class="diagram-wrap">
+<svg viewBox="0 0 1060 1920" width="1060" xmlns="http://www.w3.org/2000/svg" style="max-width:100%">
+
+<defs>
+  <marker id="arr" markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto">
+    <polygon points="0 0, 9 3.5, 0 7" fill="#64748b"/>
+  </marker>
+  <marker id="arr-g" markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto">
+    <polygon points="0 0, 9 3.5, 0 7" fill="#22c55e"/>
+  </marker>
+  <marker id="arr-r" markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto">
+    <polygon points="0 0, 9 3.5, 0 7" fill="#ef4444"/>
+  </marker>
+  <marker id="arr-y" markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto">
+    <polygon points="0 0, 9 3.5, 0 7" fill="#f59e0b"/>
+  </marker>
+  <marker id="arr-c" markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto">
+    <polygon points="0 0, 9 3.5, 0 7" fill="#06b6d4"/>
+  </marker>
+  <marker id="arr-p" markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto">
+    <polygon points="0 0, 9 3.5, 0 7" fill="#a855f7"/>
+  </marker>
+</defs>
+
+<!-- ─── START ─── -->
+<ellipse cx="530" cy="45" rx="80" ry="28" fill="#1e3a5f" stroke="#3b82f6" stroke-width="2"/>
+<text x="530" y="51" text-anchor="middle" fill="#93c5fd" font-size="14" font-weight="700">START</text>
+
+<line x1="530" y1="73" x2="530" y2="100" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
+
+<!-- ─── Open App ─── -->
+<rect x="380" y="100" width="300" height="44" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1.5"/>
+<text x="530" y="120" text-anchor="middle" fill="#cbd5e1" font-size="11" font-weight="600">Open PDF Processor Web App</text>
+<text x="530" y="136" text-anchor="middle" fill="#94a3b8" font-size="9">Navigate to http://localhost:5000</text>
+
+<line x1="530" y1="144" x2="530" y2="172" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
+
+<!-- ─── Mode Selection Tabs ─── -->
+<rect x="200" y="172" width="660" height="56" rx="8" fill="#1e293b" stroke="#60a5fa" stroke-width="1.5"/>
+<text x="530" y="194" text-anchor="middle" fill="#93c5fd" font-size="11" font-weight="600">Select Mode Tab</text>
+<rect x="285" y="202" width="190" height="22" rx="4" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1"/>
+<text x="380" y="217" text-anchor="middle" fill="#93c5fd" font-size="10" font-weight="600">Single File</text>
+<rect x="540" y="202" width="245" height="22" rx="4" fill="#14532d" stroke="#22c55e" stroke-width="1"/>
+<text x="662" y="217" text-anchor="middle" fill="#86efac" font-size="10" font-weight="600">Batch Folder</text>
+
+<!-- Branch arrows -->
+<line x1="380" y1="228" x2="250" y2="290" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#arr)"/>
+<text x="280" y="260" fill="#60a5fa" font-size="10">Single</text>
+
+<line x1="662" y1="228" x2="800" y2="290" stroke="#22c55e" stroke-width="1.5" marker-end="url(#arr-g)"/>
+<text x="750" y="260" fill="#4ade80" font-size="10">Batch</text>
+
+<!-- ══════════════════════════════════════
+     LEFT BRANCH: SINGLE FILE
+     ══════════════════════════════════════ -->
+<rect x="100" y="290" width="300" height="50" rx="7" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.5"/>
+<text x="250" y="310" text-anchor="middle" fill="#93c5fd" font-size="11" font-weight="600">Drag &amp; Drop or Browse File</text>
+<text x="250" y="326" text-anchor="middle" fill="#60a5fa" font-size="9">Single file picker (no webkitdirectory)</text>
+
+<line x1="250" y1="340" x2="250" y2="368" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
+
+<!-- PDF check diamond LEFT -->
+<polygon points="250,369 340,400 250,431 160,400" fill="#1e293b" stroke="#64748b" stroke-width="1.5"/>
+<text x="250" y="395" text-anchor="middle" fill="#cbd5e1" font-size="10" font-weight="600">Is PDF?</text>
+<text x="250" y="410" text-anchor="middle" fill="#94a3b8" font-size="9">ext check</text>
+
+<!-- No - show warning -->
+<line x1="160" y1="400" x2="60" y2="400" stroke="#ef4444" stroke-width="1.5" marker-end="url(#arr-r)"/>
+<text x="110" y="393" text-anchor="middle" fill="#ef4444" font-size="9">No</text>
+<rect x="10" y="382" width="50" height="36" rx="5" fill="#3b0000" stroke="#ef4444" stroke-width="1"/>
+<text x="35" y="397" text-anchor="middle" fill="#fca5a5" font-size="8" font-weight="600">Show</text>
+<text x="35" y="410" text-anchor="middle" fill="#fca5a5" font-size="8">Warning</text>
+
+<!-- Yes -->
+<line x1="250" y1="431" x2="250" y2="460" stroke="#22c55e" stroke-width="1.5" marker-end="url(#arr-g)"/>
+<text x="263" y="450" fill="#22c55e" font-size="9">Yes</text>
+
+<!-- Click Process -->
+<rect x="100" y="460" width="300" height="44" rx="7" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.5"/>
+<text x="250" y="479" text-anchor="middle" fill="#93c5fd" font-size="11" font-weight="600">Click "Process File"</text>
+<text x="250" y="494" text-anchor="middle" fill="#60a5fa" font-size="9">POST /process (multipart)</text>
+
+<line x1="250" y1="504" x2="250" y2="532" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
+
+<!-- Processing spinner -->
+<rect x="100" y="532" width="300" height="40" rx="7" fill="#1e293b" stroke="#475569" stroke-width="1.5"/>
+<text x="250" y="548" text-anchor="middle" fill="#94a3b8" font-size="10" font-weight="600">Processing...</text>
+<text x="250" y="563" text-anchor="middle" fill="#64748b" font-size="9">Spinner + status message</text>
+
+<line x1="250" y1="572" x2="250" y2="600" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
+
+<!-- Single result card -->
+<rect x="70" y="600" width="360" height="80" rx="7" fill="#1e1b4b" stroke="#6366f1" stroke-width="1.5"/>
+<text x="250" y="622" text-anchor="middle" fill="#c7d2fe" font-size="11" font-weight="600">Result Card Displayed</text>
+<text x="250" y="639" text-anchor="middle" fill="#a5b4fc" font-size="9">New filename | Destination folder</text>
+<text x="250" y="654" text-anchor="middle" fill="#a5b4fc" font-size="9">Confidence score bar | Status pill</text>
+<text x="250" y="669" text-anchor="middle" fill="#a5b4fc" font-size="9">Filed / Under Review / Uncategorized / Error</text>
+
+<!-- Arrow to END convergence -->
+<line x1="250" y1="680" x2="250" y2="1820" stroke="#64748b" stroke-width="1.5" stroke-dasharray="4,3"/>
+
+<!-- ══════════════════════════════════════
+     RIGHT BRANCH: BATCH FOLDER
+     ══════════════════════════════════════ -->
+<rect x="660" y="290" width="370" height="50" rx="7" fill="#14532d" stroke="#22c55e" stroke-width="1.5"/>
+<text x="845" y="310" text-anchor="middle" fill="#86efac" font-size="11" font-weight="600">Select Batch Input Sub-Tab</text>
+<text x="845" y="326" text-anchor="middle" fill="#4ade80" font-size="9">Browse &amp; Upload Folder  |  Enter Server Folder Path</text>
+
+<!-- Sub-tab branch -->
+<line x1="780" y1="340" x2="720" y2="388" stroke="#22c55e" stroke-width="1.5" marker-end="url(#arr-g)"/>
+<text x="725" y="367" fill="#4ade80" font-size="9">Browser</text>
+<line x1="910" y1="340" x2="960" y2="388" stroke="#06b6d4" stroke-width="1.5" marker-end="url(#arr-c)"/>
+<text x="945" y="367" fill="#67e8f9" font-size="9">Server</text>
+
+<!-- Browser sub-tab box -->
+<rect x="640" y="388" width="230" height="56" rx="6" fill="#14532d" stroke="#22c55e" stroke-width="1.2"/>
+<text x="755" y="408" text-anchor="middle" fill="#86efac" font-size="10" font-weight="600">Browse Folder Button</text>
+<text x="755" y="424" text-anchor="middle" fill="#4ade80" font-size="9">webkitdirectory + multiple</text>
+<text x="755" y="439" text-anchor="middle" fill="#4ade80" font-size="9">File queue preview shown</text>
+
+<!-- Server path box -->
+<rect x="890" y="388" width="160" height="56" rx="6" fill="#0a2a2a" stroke="#06b6d4" stroke-width="1.2"/>
+<text x="970" y="408" text-anchor="middle" fill="#a5f3fc" font-size="10" font-weight="600">Enter Path</text>
+<text x="970" y="424" text-anchor="middle" fill="#67e8f9" font-size="9">C:\...\folder</text>
+<text x="970" y="439" text-anchor="middle" fill="#67e8f9" font-size="9">Server scans dir</text>
+
+<!-- File queue preview (browser only) -->
+<rect x="640" y="462" width="230" height="54" rx="6" fill="#1e293b" stroke="#475569" stroke-width="1.2"/>
+<text x="755" y="481" text-anchor="middle" fill="#cbd5e1" font-size="10" font-weight="600">File Queue Preview</text>
+<text x="755" y="496" text-anchor="middle" fill="#94a3b8" font-size="9">PDF files (blue) | Non-PDF (strikethrough)</text>
+<text x="755" y="511" text-anchor="middle" fill="#94a3b8" font-size="9">Count: X PDF / Y non-PDF skipped</text>
+
+<line x1="755" y1="516" x2="755" y2="543" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
+
+<!-- Delete toggle -->
+<rect x="590" y="543" width="330" height="68" rx="7" fill="#1e293b" stroke="#f59e0b" stroke-width="1.5"/>
+<text x="755" y="563" text-anchor="middle" fill="#fcd34d" font-size="11" font-weight="600">Delete Source Files Toggle</text>
+<text x="755" y="580" text-anchor="middle" fill="#fbbf24" font-size="9">ON: Show Source Folder Path field (browser mode)</text>
+<text x="755" y="596" text-anchor="middle" fill="#fbbf24" font-size="9">OFF: Source files kept after processing</text>
+<text x="755" y="610" text-anchor="middle" fill="#fbbf24" font-size="9">Server mode: handled directly by server</text>
+
+<line x1="755" y1="611" x2="755" y2="638" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
+
+<!-- Source folder path input (conditional) -->
+<rect x="590" y="638" width="330" height="56" rx="7" fill="#1c1a00" stroke="#f59e0b" stroke-width="1.2" stroke-dasharray="6,3"/>
+<text x="755" y="658" text-anchor="middle" fill="#fcd34d" font-size="10" font-weight="600">Source Folder Path (if delete ON + browser)</text>
+<text x="755" y="674" text-anchor="middle" fill="#fbbf24" font-size="9">User enters: C:\Users\...\source_folder</text>
+<text x="755" y="690" text-anchor="middle" fill="#fbbf24" font-size="9">Required to call /delete-processed-files later</text>
+
+<line x1="755" y1="694" x2="755" y2="722" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
+
+<!-- Click Process Batch -->
+<rect x="600" y="722" width="310" height="44" rx="7" fill="#14532d" stroke="#22c55e" stroke-width="1.5"/>
+<text x="755" y="741" text-anchor="middle" fill="#86efac" font-size="11" font-weight="600">Click "Process Batch"</text>
+<text x="755" y="756" text-anchor="middle" fill="#4ade80" font-size="9">POST /process-batch (chunked, 5 files/chunk)</text>
+
+<line x1="755" y1="766" x2="755" y2="794" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
+
+<!-- Progress bar -->
+<rect x="590" y="794" width="330" height="56" rx="7" fill="#1e293b" stroke="#475569" stroke-width="1.5"/>
+<text x="755" y="814" text-anchor="middle" fill="#cbd5e1" font-size="11" font-weight="600">Progress Bar Updates</text>
+<text x="755" y="830" text-anchor="middle" fill="#94a3b8" font-size="9">Chunk N of M | file_count / total</text>
+<text x="755" y="845" text-anchor="middle" fill="#94a3b8" font-size="9">Live status: "Processing file X..."</text>
+
+<line x1="755" y1="850" x2="755" y2="878" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
+
+<!-- Per-file pipeline box -->
+<rect x="590" y="878" width="330" height="80" rx="7" fill="#2d1b00" stroke="#f59e0b" stroke-width="1.5"/>
+<text x="755" y="898" text-anchor="middle" fill="#fcd34d" font-size="11" font-weight="600">Per-File Pipeline (each PDF)</text>
+<text x="755" y="914" text-anchor="middle" fill="#fbbf24" font-size="9">Extract text + detect language (EN/AR/Mixed)</text>
+<text x="755" y="929" text-anchor="middle" fill="#fbbf24" font-size="9">Classify: Scenario 1 / 2 / Intelligent Prediction</text>
+<text x="755" y="944" text-anchor="middle" fill="#fbbf24" font-size="9">Build filename | Move to dest | Verify copy</text>
+<text x="755" y="958" text-anchor="middle" fill="#fbbf24" font-size="9">Write audit record to audit_log.json</text>
+
+<line x1="755" y1="958" x2="755" y2="986" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
+
+<!-- Status per file diamond -->
+<polygon points="755,987 845,1020 755,1053 665,1020" fill="#1e293b" stroke="#64748b" stroke-width="1.5"/>
+<text x="755" y="1015" text-anchor="middle" fill="#cbd5e1" font-size="10" font-weight="600">File Status</text>
+<text x="755" y="1030" text-anchor="middle" fill="#94a3b8" font-size="9">Filed / Review / Failed / Skipped</text>
+
+<!-- Filed -->
+<line x1="755" y1="1053" x2="755" y2="1080" stroke="#22c55e" stroke-width="1.5" marker-end="url(#arr-g)"/>
+
+<!-- ── Deletion section (after all batches done) ── -->
+<rect x="590" y="1080" width="330" height="74" rx="7" fill="#001a1a" stroke="#06b6d4" stroke-width="1.5"/>
+<text x="755" y="1100" text-anchor="middle" fill="#a5f3fc" font-size="11" font-weight="600">Delete Source Files (if enabled)</text>
+<text x="755" y="1116" text-anchor="middle" fill="#67e8f9" font-size="9">Browser mode: POST /delete-processed-files</text>
+<text x="755" y="1131" text-anchor="middle" fill="#67e8f9" font-size="9">Sends: { folder_path, filenames[] }</text>
+<text x="755" y="1145" text-anchor="middle" fill="#67e8f9" font-size="9">Only successfully filed filenames included</text>
+
+<line x1="755" y1="1154" x2="755" y2="1182" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
+
+<!-- Delete result diamond -->
+<polygon points="755,1183 835,1212 755,1241 675,1212" fill="#1e293b" stroke="#06b6d4" stroke-width="1.5"/>
+<text x="755" y="1207" text-anchor="middle" fill="#a5f3fc" font-size="10">Deleted?</text>
+<text x="755" y="1220" text-anchor="middle" fill="#67e8f9" font-size="9">per file</text>
+
+<!-- Deleted YES -->
+<line x1="835" y1="1212" x2="920" y2="1212" stroke="#22c55e" stroke-width="1.5" marker-end="url(#arr-g)"/>
+<text x="878" y="1205" text-anchor="middle" fill="#22c55e" font-size="9">Yes</text>
+<rect x="920" y="1194" width="100" height="36" rx="5" fill="#14532d" stroke="#22c55e" stroke-width="1"/>
+<text x="970" y="1210" text-anchor="middle" fill="#86efac" font-size="9" font-weight="600">Delete</text>
+<text x="970" y="1223" text-anchor="middle" fill="#4ade80" font-size="9">Success</text>
+
+<!-- Deleted NO / Failed -->
+<line x1="675" y1="1212" x2="590" y2="1212" stroke="#ef4444" stroke-width="1.5" marker-end="url(#arr-r)"/>
+<text x="632" y="1205" text-anchor="middle" fill="#ef4444" font-size="9">No</text>
+<rect x="510" y="1194" width="80" height="36" rx="5" fill="#3b0000" stroke="#ef4444" stroke-width="1"/>
+<text x="550" y="1210" text-anchor="middle" fill="#fca5a5" font-size="9" font-weight="600">Delete</text>
+<text x="550" y="1223" text-anchor="middle" fill="#f87171" font-size="9">Failed</text>
+
+<line x1="755" y1="1241" x2="755" y2="1268" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
+
+<!-- Batch results table -->
+<rect x="560" y="1268" width="390" height="110" rx="8" fill="#1e1b4b" stroke="#6366f1" stroke-width="1.5"/>
+<text x="755" y="1290" text-anchor="middle" fill="#c7d2fe" font-size="11" font-weight="600">Batch Results Table</text>
+<!-- Header row mock -->
+<rect x="575" y="1297" width="360" height="20" rx="3" fill="#312e81" stroke="#4338ca" stroke-width="0.8"/>
+<text x="620" y="1311" fill="#a5b4fc" font-size="8">File</text>
+<text x="730" y="1311" fill="#a5b4fc" font-size="8">Status</text>
+<text x="820" y="1311" fill="#a5b4fc" font-size="8">New Name</text>
+<text x="910" y="1311" fill="#a5b4fc" font-size="8">Dest Folder</text>
+<!-- Row mock -->
+<rect x="575" y="1317" width="360" height="15" rx="2" fill="#1e1b4b" stroke="#3730a3" stroke-width="0.5"/>
+<text x="620" y="1328" fill="#818cf8" font-size="7">doc.pdf</text>
+<rect x="720" y="1319" width="36" height="11" rx="3" fill="#14532d"/><text x="738" y="1328" fill="#4ade80" font-size="7">Filed</text>
+<text x="760" y="1328" fill="#94a3b8" font-size="7">ECS_Corp_ED_2022.pdf</text>
+<!-- Stats bar -->
+<rect x="575" y="1336" width="360" height="22" rx="3" fill="#0f172a" stroke="#334155" stroke-width="0.8"/>
+<text x="595" y="1351" fill="#22c55e" font-size="8" font-weight="600">Found: 6</text>
+<text x="658" y="1351" fill="#3b82f6" font-size="8">Filed: 5</text>
+<text x="710" y="1351" fill="#f59e0b" font-size="8">Review: 0</text>
+<text x="775" y="1351" fill="#ef4444" font-size="8">Failed: 0</text>
+<text x="828" y="1351" fill="#64748b" font-size="8">Skipped: 1</text>
+<!-- Deletion report -->
+<rect x="575" y="1362" width="360" height="12" rx="2" fill="#0a2a2a" stroke="#0e7490" stroke-width="0.5"/>
+<text x="755" y="1371" text-anchor="middle" fill="#67e8f9" font-size="7">Deletion Report: 5 deleted | 0 failed | 1 skipped (not filed)</text>
+
+<line x1="755" y1="1378" x2="755" y2="1406" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
+
+<!-- All done? diamond -->
+<polygon points="755,1407 840,1437 755,1467 670,1437" fill="#1e293b" stroke="#64748b" stroke-width="1.5"/>
+<text x="755" y="1432" text-anchor="middle" fill="#cbd5e1" font-size="10" font-weight="600">All Files</text>
+<text x="755" y="1446" text-anchor="middle" fill="#94a3b8" font-size="9">Processed?</text>
+
+<!-- More files loop -->
+<line x1="670" y1="1437" x2="570" y2="1437" stroke="#f59e0b" stroke-width="1.5"/>
+<text x="620" y="1430" text-anchor="middle" fill="#f59e0b" font-size="9">More</text>
+<line x1="570" y1="1437" x2="570" y2="895" stroke="#f59e0b" stroke-width="1.5"/>
+<line x1="570" y1="895" x2="590" y2="895" stroke="#f59e0b" stroke-width="1.5" marker-end="url(#arr-y)"/>
+
+<!-- Done -->
+<line x1="755" y1="1467" x2="755" y2="1495" stroke="#22c55e" stroke-width="1.5" marker-end="url(#arr-g)"/>
+<text x="768" y="1485" fill="#22c55e" font-size="9">Done</text>
+
+<!-- Merge both branches to END -->
+<line x1="250" y1="1820" x2="755" y2="1820" stroke="#64748b" stroke-width="1.5"/>
+
+<!-- END box for batch side -->
+<rect x="620" y="1495" width="270" height="50" rx="8" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.5"/>
+<text x="755" y="1516" text-anchor="middle" fill="#93c5fd" font-size="11" font-weight="600">Session Complete</text>
+<text x="755" y="1532" text-anchor="middle" fill="#60a5fa" font-size="9">Audit log available at /audit-log | Reset UI option</text>
+
+<line x1="755" y1="1545" x2="755" y2="1820" stroke="#64748b" stroke-width="1.5"/>
+
+<line x1="530" y1="1820" x2="530" y2="1848" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
+
+<!-- END oval -->
+<ellipse cx="530" cy="1875" rx="80" ry="28" fill="#1e3a5f" stroke="#3b82f6" stroke-width="2"/>
+<text x="530" y="1881" text-anchor="middle" fill="#93c5fd" font-size="14" font-weight="700">END</text>
+
+<!-- ── Warning loop back ── -->
+<line x1="35" y1="400" x2="35" y2="480" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="4,3"/>
+<text x="28" y="445" fill="#ef4444" font-size="9" transform="rotate(-90,28,445)">Re-select file</text>
+<line x1="35" y1="480" x2="100" y2="480" stroke="#ef4444" stroke-width="1.5" marker-end="url(#arr-r)"/>
+
+<!-- ── Section Labels ── -->
+<text x="250" y="282" text-anchor="middle" fill="#60a5fa" font-size="10" font-style="italic" font-weight="600">SINGLE FILE PATH</text>
+<text x="845" y="282" text-anchor="middle" fill="#4ade80" font-size="10" font-style="italic" font-weight="600">BATCH FOLDER PATH</text>
+
+<!-- Connecting arrow from server path to delete toggle area -->
+<line x1="970" y1="444" x2="970" y2="580" stroke="#06b6d4" stroke-width="1.5" stroke-dasharray="4,3"/>
+<line x1="970" y1="580" x2="920" y2="580" stroke="#06b6d4" stroke-width="1.5" marker-end="url(#arr-c)"/>
+
+</svg>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-box" style="background:#1e3a5f;border:1.5px solid #3b82f6"></div>Single File Path</div>
+  <div class="legend-item"><div class="legend-box" style="background:#14532d;border:1.5px solid #22c55e"></div>Batch Folder Path</div>
+  <div class="legend-item"><div class="legend-box" style="background:#1c1a00;border:1.5px dashed #f59e0b"></div>Conditional (delete toggle)</div>
+  <div class="legend-item"><div class="legend-box" style="background:#0a2a2a;border:1.5px solid #06b6d4"></div>Source Deletion (CR3)</div>
+  <div class="legend-item"><div class="legend-box" style="background:#1e1b4b;border:1.5px solid #6366f1"></div>Results Display</div>
+  <div class="legend-item"><div class="legend-box" style="background:#3b0000;border:1.5px solid #ef4444"></div>Error / Warning</div>
+  <div class="legend-item"><div class="legend-box" style="background:#2d1b00;border:1.5px solid #f59e0b"></div>Classification Pipeline</div>
+</div>
+
+<div class="footer">
+  PDF Intelligent File Processor &mdash; User Flow v2 &mdash; Updated 2026-05-14 &mdash; Reflects CR1, CR2, CR3
+</div>
+
+</body>
+</html>

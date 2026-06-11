@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PDF Processor – System Flow Diagram v2</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #0f1117;
+    color: #e0e0e0;
+    min-height: 100vh;
+    padding: 24px;
+  }
+  h1 {
+    text-align: center;
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 4px;
+    letter-spacing: 0.5px;
+  }
+  .subtitle {
+    text-align: center;
+    font-size: 13px;
+    color: #888;
+    margin-bottom: 28px;
+  }
+  .diagram-wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    overflow-x: auto;
+  }
+  svg { display: block; margin: 0 auto; }
+
+  /* Legend */
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+    margin-top: 28px;
+    font-size: 12px;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .legend-box {
+    width: 18px; height: 14px;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+  .footer {
+    text-align: center;
+    margin-top: 32px;
+    font-size: 11px;
+    color: #555;
+  }
+</style>
+</head>
+<body>
+
+<h1>PDF Processor &mdash; System Flow Diagram v2</h1>
+<p class="subtitle">Reflects CR1 (Bulk Input), CR2 (Intelligent Prediction), CR3 (Safe Delete + Audit Log)</p>
+
+<div class="diagram-wrap">
+<svg viewBox="0 0 1060 1620" width="1060" xmlns="http://www.w3.org/2000/svg" style="max-width:100%">
+
+<defs>
+  <marker id="arr" markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto">
+    <polygon points="0 0, 9 3.5, 0 7" fill="#64748b"/>
+  </marker>
+  <marker id="arr-green" markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto">
+    <polygon points="0 0, 9 3.5, 0 7" fill="#22c55e"/>
+  </marker>
+  <marker id="arr-red" markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto">
+    <polygon points="0 0, 9 3.5, 0 7" fill="#ef4444"/>
+  </marker>
+  <marker id="arr-yellow" markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto">
+    <polygon points="0 0, 9 3.5, 0 7" fill="#f59e0b"/>
+  </marker>
+  <marker id="arr-blue" markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto">
+    <polygon points="0 0, 9 3.5, 0 7" fill="#3b82f6"/>
+  </marker>
+  <filter id="glow">
+    <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+    <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+</defs>
+
+<!-- ═══════════════════════════════════════════════════════
+     LAYER 0: INPUT
+     ═══════════════════════════════════════════════════════ -->
+<rect x="10" y="10" width="1040" height="60" rx="8" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.5"/>
+<text x="530" y="35" text-anchor="middle" fill="#93c5fd" font-size="11" font-weight="700" letter-spacing="1">LAYER 1 — INPUT</text>
+<text x="530" y="55" text-anchor="middle" fill="#60a5fa" font-size="10">Browser Upload (single / folder) or Server Folder Path</text>
+
+<!-- START oval -->
+<ellipse cx="530" cy="115" rx="70" ry="24" fill="#1e3a5f" stroke="#3b82f6" stroke-width="2"/>
+<text x="530" y="120" text-anchor="middle" fill="#93c5fd" font-size="13" font-weight="700">START</text>
+
+<!-- Arrow START -> Mode -->
+<line x1="530" y1="139" x2="530" y2="162" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
+
+<!-- Mode diamond -->
+<polygon points="530,163 630,203 530,243 430,203" fill="#1e293b" stroke="#64748b" stroke-width="1.5"/>
+<text x="530" y="198" text-anchor="middle" fill="#cbd5e1" font-size="11" font-weight="600">Input Mode?</text>
+<text x="530" y="213" text-anchor="middle" fill="#94a3b8" font-size="9">Single / Batch</text>
+
+<!-- Left branch: Single File -->
+<line x1="430" y1="203" x2="280" y2="203" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
+<text x="355" y="196" text-anchor="middle" fill="#94a3b8" font-size="10">Single File</text>
+
+<rect x="180" y="183" width="100" height="40" rx="6" fill="#164e63" stroke="#06b6d4" stroke-width="1.5"/>
+<text x="230" y="200" text-anchor="middle" fill="#a5f3fc" font-size="10" font-weight="600">Upload PDF</text>
+<text x="230" y="215" text-anchor="middle" fill="#67e8f9" font-size="9">via /process</text>
+
+<!-- Right branch: Batch -->
+<line x1="630" y1="203" x2="780" y2="203" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
+<text x="705" y="196" text-anchor="middle" fill="#94a3b8" font-size="10">Batch Folder</text>
+
+<rect x="780" y="183" width="110" height="40" rx="6" fill="#164e63" stroke="#06b6d4" stroke-width="1.5"/>
+<text x="835" y="198" text-anchor="middle" fill="#a5f3fc" font-size="10" font-weight="600">Scan Folder</text>
+<text x="835" y="212" text-anchor="middle" fill="#67e8f9" font-size="9">os.walk .pdf only</text>
+
+<!-- Both converge to PDF Check -->
+<line x1="230" y1="223" x2="230" y2="275" stroke="#64748b" stroke-width="1.5"/>
+<line x1="835" y1="223" x2="835" y2="275" stroke="#64748b" stroke-width="1.5"/>
+<line x1="230" y1="275" x2="530" y2="275" stroke="#64748b" stroke-width="1.5"/>
+<line x1="835" y1="275" x2="530" y2="275" stroke="#64748b" stroke-width="1.5"/>
+<line x1="530" y1="275" x2="530" y2="296" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
+
+<!-- PDF Check diamond -->
+<polygon points="530,297 625,330 530,363 435,330" fill="#1e293b" stroke="#64748b" stroke-width="1.5"/>
+<text x="530" y="325" text-anchor="middle" fill="#cbd5e1" font-size="11" font-weight="600">Is PDF?</text>
+<text x="530" y="340" text-anchor="middle" fill="#94a3b8" font-size="9">extension + magic bytes</text>
+
+<!-- NO branch -->
+<line x1="625" y1="330" x2="780" y2="330" stroke="#ef4444" stroke-width="1.5" marker-end="url(#arr-red)"/>
+<text x="703" y="323" text-anchor="middle" fill="#ef4444" font-size="10">Not PDF</text>
+
+<rect x="780" y="310" width="110" height="40" rx="6" fill="#3b0000" stroke="#ef4444" stroke-width="1.5"/>
+<text x="835" y="325" text-anchor="middle" fill="#fca5a5" font-size="10" font-weight="600">Skip / Warn</text>
+<text x="835" y="340" text-anchor="middle" fill="#f87171" font-size="9">status: skipped</text>
+
+<!-- YES arrow -->
+<line x1="530" y1="363" x2="530" y2="393" stroke="#22c55e" stroke-width="1.5" marker-end="url(#arr-green)"/>
+<text x="543" y="382" fill="#22c55e" font-size="10">Yes</text>
+
+<!-- ═══════════════════════════════════════════════════════
+     LAYER 2: TEXT EXTRACTION
+     ═══════════════════════════════════════════════════════ -->
+<rect x="10" y="400" width="1040" height="60" rx="8" fill="#1a2e1a" stroke="#22c55e" stroke-width="1.5"/>
+<text x="530" y="425" text-anchor="middle" fill="#86efac" font-size="11" font-weight="700" letter-spacing="1">LAYER 2 — TEXT EXTRACTION</text>
+<text x="530" y="445" text-anchor="middle" fill="#4ade80" font-size="10">pdfplumber (digital) + OCR fallback (scanned) | Language Detection: EN / AR / Mixed</text>
+
+<line x1="530" y1="460" x2="530" y2="487" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
+
+<rect x="380" y="488" width="300" height="52" rx="7" fill="#14532d" stroke="#22c55e" stroke-width="1.5"/>
+<text x="530" y="508" text-anchor="middle" fill="#86efac" font-size="11" font-weight="600">Extract Text + Detect Language</text>
+<text x="530" y="525" text-anchor="middle" fill="#4ade80" font-size="10">pdfplumber / pytesseract | lang: EN / AR / Mixed</text>
+
+<line x1="530" y1="540" x2="530" y2="568" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
+
+<!-- ═══════════════════════════════════════════════════════
+     LAYER 3: CLASSIFICATION ENGINE
+     ═══════════════════════════════════════════════════════ -->
+<rect x="10" y="575" width="1040" height="60" rx="8" fill="#2d1b00" stroke="#f59e0b" stroke-width="1.5"/>
+<text x="530" y="600" text-anchor="middle" fill="#fcd34d" font-size="11" font-weight="700" letter-spacing="1">LAYER 3 — CLASSIFICATION ENGINE (3 SCENARIOS)</text>
+<text x="530" y="618" text-anchor="middle" fill="#fbbf24" font-size="10">Keyword + Structure + Confidence Scoring | Bilingual EN/AR</text>
+
+<line x1="530" y1="635" x2="530" y2="660" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
+
+<!-- Scenario 1 box -->
+<rect x="30" y="661" width="280" height="70" rx="7" fill="#1c1a00" stroke="#f59e0b" stroke-width="1.5"/>
+<text x="45" y="681" fill="#fcd34d" font-size="10" font-weight="700">Scenario 1: Structure Heading</text>
+<text x="45" y="698" fill="#fbbf24" font-size="9">Detect heading patterns (e.g. "Executive Decision")</text>
+<text x="45" y="713" fill="#fbbf24" font-size="9">Extracts doc type + entity + date from heading</text>
+<text x="45" y="728" fill="#fbbf24" font-size="9">Confidence: HIGH (direct match)</text>
+
+<!-- Scenario 2 box -->
+<rect x="390" y="661" width="280" height="70" rx="7" fill="#1c1a00" stroke="#f59e0b" stroke-width="1.5"/>
+<text x="405" y="681" fill="#fcd34d" font-size="10" font-weight="700">Scenario 2: Bilingual Keyword Match</text>
+<text x="405" y="698" fill="#fbbf24" font-size="9">TF-IDF keyword list (EN + AR translations)</text>
+<text x="405" y="713" fill="#fbbf24" font-size="9">Confidence score computed vs threshold</text>
+<text x="405" y="728" fill="#fbbf24" font-size="9">Confidence >= 0.60 triggers classification</text>
+
+<!-- Scenario 3 box -->
+<rect x="750" y="661" width="280" height="70" rx="7" fill="#1c1a00" stroke="#ef4444" stroke-width="1.5"/>
+<text x="765" y="681" fill="#fca5a5" font-size="10" font-weight="700">Scenario 3: Low Confidence</text>
+<text x="765" y="698" fill="#f87171" font-size="9">Score &lt; 0.60 — enters Intelligent Prediction</text>
+<text x="765" y="713" fill="#f87171" font-size="9">TF-IDF cosine similarity + RapidFuzz matching</text>
+<text x="765" y="728" fill="#f87171" font-size="9">Score >= 0.35 -> predicted; else Uncategorized</text>
+
+<!-- Convergence arrows from scenario boxes -->
+<line x1="170" y1="731" x2="170" y2="775" stroke="#22c55e" stroke-width="1.5"/>
+<line x1="530" y1="731" x2="530" y2="775" stroke="#22c55e" stroke-width="1.5"/>
+<line x1="890" y1="731" x2="890" y2="775" stroke="#f59e0b" stroke-width="1.5"/>
+
+<!-- Intelligent Prediction detail for Scenario 3 -->
+<rect x="750" y="740" width="280" height="80" rx="7" fill="#1a0000" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="5,3"/>
+<text x="765" y="760" fill="#fca5a5" font-size="9" font-weight="700">Intelligent Prediction Mode (CR2)</text>
+<text x="765" y="776" fill="#f87171" font-size="9">_build_known_folder_candidates()</text>
+<text x="765" y="791" fill="#f87171" font-size="9">_tfidf_predict() -> cosine similarity</text>
+<text x="765" y="806" fill="#f87171" font-size="9">_fuzzy_predict() -> RapidFuzz token_sort_ratio</text>
+
+<line x1="890" y1="820" x2="890" y2="850" stroke="#f59e0b" stroke-width="1.5" marker-end="url(#arr-yellow)"/>
+
+<!-- Score decision diamond -->
+<polygon points="890,851 960,876 890,901 820,876" fill="#1e293b" stroke="#f59e0b" stroke-width="1.5"/>
+<text x="890" y="871" text-anchor="middle" fill="#fcd34d" font-size="10">Score</text>
+<text x="890" y="886" text-anchor="middle" fill="#fbbf24" font-size="9">>= 0.35?</text>
+
+<line x1="960" y1="876" x2="1020" y2="876" stroke="#22c55e" stroke-width="1.5" marker-end="url(#arr-green)"/>
+<text x="990" y="869" text-anchor="middle" fill="#22c55e" font-size="9">Yes</text>
+<rect x="1020" y="856" width="30" height="40" rx="4" fill="#14532d" stroke="#22c55e" stroke-width="1"/>
+<text x="1035" y="873" text-anchor="middle" fill="#86efac" font-size="8" font-weight="600">Pre-</text>
+<text x="1035" y="886" text-anchor="middle" fill="#86efac" font-size="8" font-weight="600">dict</text>
+
+<line x1="820" y1="876" x2="750" y2="876" stroke="#ef4444" stroke-width="1.5" marker-end="url(#arr-red)"/>
+<text x="785" y="869" text-anchor="middle" fill="#ef4444" font-size="9">No</text>
+<rect x="660" y="856" width="90" height="40" rx="4" fill="#3b0000" stroke="#ef4444" stroke-width="1"/>
+<text x="705" y="873" text-anchor="middle" fill="#fca5a5" font-size="8" font-weight="600">Uncategorized/</text>
+<text x="705" y="885" text-anchor="middle" fill="#fca5a5" font-size="8">Review Required</text>
+
+<!-- Merge all scenarios into FILE NAMING -->
+<line x1="170" y1="775" x2="170" y2="930" stroke="#64748b" stroke-width="1.5"/>
+<line x1="530" y1="775" x2="530" y2="930" stroke="#64748b" stroke-width="1.5"/>
+<line x1="1035" y1="896" x2="1035" y2="930" stroke="#64748b" stroke-width="1.5"/>
+<line x1="705" y1="896" x2="705" y2="930" stroke="#64748b" stroke-width="1.5"/>
+<line x1="170" y1="930" x2="1035" y2="930" stroke="#64748b" stroke-width="1.5"/>
+<line x1="530" y1="930" x2="530" y2="952" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
+
+<!-- ═══════════════════════════════════════════════════════
+     LAYER 4: FILE NAMING
+     ═══════════════════════════════════════════════════════ -->
+<rect x="10" y="959" width="1040" height="56" rx="8" fill="#1e1a35" stroke="#a855f7" stroke-width="1.5"/>
+<text x="530" y="982" text-anchor="middle" fill="#d8b4fe" font-size="11" font-weight="700" letter-spacing="1">LAYER 4 — FILE NAMING</text>
+<text x="530" y="1000" text-anchor="middle" fill="#c084fc" font-size="10">Corporate / Maritime / TRBA / TTC naming conventions | Collision handler (suffix counter)</text>
+
+<line x1="530" y1="1015" x2="530" y2="1042" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
+
+<rect x="310" y="1043" width="440" height="60" rx="7" fill="#2e1065" stroke="#a855f7" stroke-width="1.5"/>
+<text x="530" y="1066" text-anchor="middle" fill="#d8b4fe" font-size="11" font-weight="600">Build New Filename</text>
+<text x="530" y="1083" text-anchor="middle" fill="#c084fc" font-size="10">[CompanyCode]_[Entity]_[DocType]_[Year]_[Seq].pdf</text>
+<text x="530" y="1098" text-anchor="middle" fill="#a78bfa" font-size="9">Collision check -> append _001, _002 ... if needed</text>
+
+<line x1="530" y1="1103" x2="530" y2="1130" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
+
+<!-- ═══════════════════════════════════════════════════════
+     LAYER 5: MOVE + VERIFY + DELETE (CR3)
+     ═══════════════════════════════════════════════════════ -->
+<rect x="10" y="1137" width="1040" height="56" rx="8" fill="#001a1a" stroke="#06b6d4" stroke-width="1.5"/>
+<text x="530" y="1160" text-anchor="middle" fill="#a5f3fc" font-size="11" font-weight="700" letter-spacing="1">LAYER 5 — MOVE, VERIFY, DELETE (CR3)</text>
+<text x="530" y="1178" text-anchor="middle" fill="#67e8f9" font-size="10">MD5 duplicate detection | Safe copy | Byte-size verification | Source-only deletion</text>
+
+<line x1="530" y1="1193" x2="530" y2="1220" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
+
+<!-- Sub-steps row -->
+<rect x="30" y="1221" width="190" height="56" rx="6" fill="#0a2a2a" stroke="#06b6d4" stroke-width="1.2"/>
+<text x="125" y="1243" text-anchor="middle" fill="#a5f3fc" font-size="10" font-weight="600">1. Duplicate Check</text>
+<text x="125" y="1259" text-anchor="middle" fill="#67e8f9" font-size="9">MD5 hash vs dest folder</text>
+<text x="125" y="1272" text-anchor="middle" fill="#67e8f9" font-size="9">Skip if identical exists</text>
+
+<rect x="240" y="1221" width="190" height="56" rx="6" fill="#0a2a2a" stroke="#06b6d4" stroke-width="1.2"/>
+<text x="335" y="1243" text-anchor="middle" fill="#a5f3fc" font-size="10" font-weight="600">2. Create Dest Folder</text>
+<text x="335" y="1259" text-anchor="middle" fill="#67e8f9" font-size="9">makedirs if missing</text>
+<text x="335" y="1272" text-anchor="middle" fill="#67e8f9" font-size="9">Dynamic path calculated</text>
+
+<rect x="450" y="1221" width="190" height="56" rx="6" fill="#0a2a2a" stroke="#06b6d4" stroke-width="1.2"/>
+<text x="545" y="1243" text-anchor="middle" fill="#a5f3fc" font-size="10" font-weight="600">3. Safe Copy + Verify</text>
+<text x="545" y="1259" text-anchor="middle" fill="#67e8f9" font-size="9">shutil.copy2 to dest</text>
+<text x="545" y="1272" text-anchor="middle" fill="#67e8f9" font-size="9">Byte-size confirmed</text>
+
+<rect x="660" y="1221" width="190" height="56" rx="6" fill="#0a2a2a" stroke="#06b6d4" stroke-width="1.2"/>
+<text x="755" y="1243" text-anchor="middle" fill="#a5f3fc" font-size="10" font-weight="600">4. Delete Source File</text>
+<text x="755" y="1259" text-anchor="middle" fill="#67e8f9" font-size="9">Source file only removed</text>
+<text x="755" y="1272" text-anchor="middle" fill="#67e8f9" font-size="9">Folder preserved (CR3)</text>
+
+<rect x="860" y="1221" width="170" height="56" rx="6" fill="#0a2a2a" stroke="#06b6d4" stroke-width="1.2"/>
+<text x="945" y="1243" text-anchor="middle" fill="#a5f3fc" font-size="10" font-weight="600">5. Write Audit Record</text>
+<text x="945" y="1259" text-anchor="middle" fill="#67e8f9" font-size="9">audit_log.json entry</text>
+<text x="945" y="1272" text-anchor="middle" fill="#67e8f9" font-size="9">operations.log append</text>
+
+<line x1="530" y1="1277" x2="530" y2="1305" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
+
+<!-- ═══════════════════════════════════════════════════════
+     LAYER 6: RESPONSE
+     ═══════════════════════════════════════════════════════ -->
+<rect x="10" y="1312" width="1040" height="56" rx="8" fill="#1a1a2e" stroke="#6366f1" stroke-width="1.5"/>
+<text x="530" y="1335" text-anchor="middle" fill="#c7d2fe" font-size="11" font-weight="700" letter-spacing="1">LAYER 6 — STATUS RESPONSE</text>
+<text x="530" y="1353" text-anchor="middle" fill="#a5b4fc" font-size="10">Single: result card (filename, folder, confidence) | Batch: summary table + deletion report</text>
+
+<line x1="530" y1="1368" x2="530" y2="1395" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
+
+<!-- Single vs Batch result boxes -->
+<rect x="180" y="1396" width="280" height="50" rx="7" fill="#1e1b4b" stroke="#6366f1" stroke-width="1.5"/>
+<text x="320" y="1416" text-anchor="middle" fill="#c7d2fe" font-size="10" font-weight="600">Single File Result Card</text>
+<text x="320" y="1432" text-anchor="middle" fill="#a5b4fc" font-size="9">new filename | dest folder | confidence | status pill</text>
+
+<rect x="600" y="1396" width="280" height="50" rx="7" fill="#1e1b4b" stroke="#6366f1" stroke-width="1.5"/>
+<text x="740" y="1416" text-anchor="middle" fill="#c7d2fe" font-size="10" font-weight="600">Batch Results Table</text>
+<text x="740" y="1432" text-anchor="middle" fill="#a5b4fc" font-size="9">Found / Filed / Review / Failed / Skipped + Deletion Report</text>
+
+<!-- Converge to END -->
+<line x1="320" y1="1446" x2="320" y2="1490" stroke="#64748b" stroke-width="1.5"/>
+<line x1="740" y1="1446" x2="740" y2="1490" stroke="#64748b" stroke-width="1.5"/>
+<line x1="320" y1="1490" x2="740" y2="1490" stroke="#64748b" stroke-width="1.5"/>
+<line x1="530" y1="1490" x2="530" y2="1510" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
+
+<!-- END oval -->
+<ellipse cx="530" cy="1535" rx="70" ry="24" fill="#1e3a5f" stroke="#3b82f6" stroke-width="2"/>
+<text x="530" y="1540" text-anchor="middle" fill="#93c5fd" font-size="13" font-weight="700">END</text>
+
+<!-- Layer labels on right -->
+<text x="1052" y="42" text-anchor="end" fill="#3b82f6" font-size="9" font-style="italic">L1</text>
+<text x="1052" y="432" text-anchor="end" fill="#22c55e" font-size="9" font-style="italic">L2</text>
+<text x="1052" y="607" text-anchor="end" fill="#f59e0b" font-size="9" font-style="italic">L3</text>
+<text x="1052" y="987" text-anchor="end" fill="#a855f7" font-size="9" font-style="italic">L4</text>
+<text x="1052" y="1165" text-anchor="end" fill="#06b6d4" font-size="9" font-style="italic">L5</text>
+<text x="1052" y="1340" text-anchor="end" fill="#6366f1" font-size="9" font-style="italic">L6</text>
+
+</svg>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-box" style="background:#1e3a5f;border:1.5px solid #3b82f6"></div>Input / Control</div>
+  <div class="legend-item"><div class="legend-box" style="background:#14532d;border:1.5px solid #22c55e"></div>Text Extraction</div>
+  <div class="legend-item"><div class="legend-box" style="background:#1c1a00;border:1.5px solid #f59e0b"></div>Classification</div>
+  <div class="legend-item"><div class="legend-box" style="background:#1a0000;border:1.5px dashed #ef4444"></div>Intelligent Prediction (CR2)</div>
+  <div class="legend-item"><div class="legend-box" style="background:#2e1065;border:1.5px solid #a855f7"></div>File Naming</div>
+  <div class="legend-item"><div class="legend-box" style="background:#0a2a2a;border:1.5px solid #06b6d4"></div>Move + Verify + Delete (CR3)</div>
+  <div class="legend-item"><div class="legend-box" style="background:#1e1b4b;border:1.5px solid #6366f1"></div>Response / Output</div>
+  <div class="legend-item"><div class="legend-box" style="background:#3b0000;border:1.5px solid #ef4444"></div>Error / Skip</div>
+</div>
+
+<div class="footer">
+  PDF Intelligent File Processor &mdash; System Flow v2 &mdash; Updated 2026-05-14 &mdash; Reflects CR1, CR2, CR3
+</div>
+
+</body>
+</html>
